@@ -3,7 +3,7 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-  BadRequestException,
+  ForbiddenException,
   createParamDecorator,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -45,7 +45,7 @@ export class AuthGuard implements CanActivate {
       context.getClass(),
     ]);
     if (roles && roles.length > 0 && !roles.includes(user.role)) {
-      throw new BadRequestException('当前角色无权执行此操作');
+      throw new ForbiddenException('当前角色无权执行此操作');
     }
     return true;
   }
